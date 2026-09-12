@@ -8,7 +8,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 );
 ---
 
-<BaseLayout title="文章" description="蚂蚁妈妈博客的全部文章">
+<BaseLayout title="文章" description="蚂蚁码码博客的全部文章">
 	<header class="page-hero">
 		<h1>文章</h1>
 		<p>按时间倒序排列。新文章放进 `src/content/blog` 即可自动出现。</p>
