@@ -4,10 +4,12 @@ import { withBase } from '../utils/paths';
 
 const pathname = Astro.url.pathname;
 const base = import.meta.env.BASE_URL;
+const searchAction = withBase('search/');
 const links = [
 	{ href: withBase(), label: '首页', match: 'home' as const },
 	{ href: withBase('blog/'), label: '文章', match: 'blog' as const },
 	{ href: withBase('categories/'), label: '分类', match: 'categories' as const },
+	{ href: withBase('search/'), label: '搜索', match: 'search' as const },
 	{ href: withBase('about/'), label: '关于', match: 'about' as const },
 ];
 
@@ -17,10 +19,7 @@ function isCurrent(match: (typeof links)[number]['match']) {
 		return normalized === base || normalized === '/';
 	}
 	if (match === 'blog') {
-		return (
-			normalized.includes('/blog/') &&
-			!normalized.includes('/categories/')
-		);
+		return normalized.includes('/blog/') && !normalized.includes('/categories/');
 	}
 	return normalized.includes(`/${match}/`);
 }
@@ -31,13 +30,25 @@ function isCurrent(match: (typeof links)[number]['match']) {
 		{SITE_TITLE}
 		<span>MaYiMaMa</span>
 	</a>
-	<nav class="nav" aria-label="主导航">
-		{
-			links.map((link) => (
-				<a href={link.href} aria-current={isCurrent(link.match) ? 'page' : undefined}>
-					{link.label}
-				</a>
-			))
-		}
-	</nav>
+	<div class="header-tools">
+		<nav class="nav" aria-label="主导航">
+			{
+				links.map((link) => (
+					<a href={link.href} aria-current={isCurrent(link.match) ? 'page' : undefined}>
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+		<form class="header-search" action={searchAction} method="get" role="search">
+			<label class="visually-hidden" for="header-search-input">搜索文章</label>
+			<input
+				id="header-search-input"
+				type="search"
+				name="q"
+				placeholder="搜索文章"
+				autocomplete="off"
+			/>
+		</form>
+	</div>
 </header>
