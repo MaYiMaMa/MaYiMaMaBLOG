@@ -1,5 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
-import { getCategoryOrder } from '../data/categories';
+import { CATEGORY_META, getCategoryOrder } from '../data/categories';
 
 export type BlogPost = CollectionEntry<'blog'>;
 
@@ -28,8 +28,16 @@ export type CategorySummary = {
 	count: number;
 };
 
+/**
+ * 合并「预设分类」与「文章里出现的分类」。
+ * 预设里即使 0 篇也会展示，方便一眼看到完整技术目录。
+ */
 export function buildCategorySummaries(posts: BlogPost[]): CategorySummary[] {
 	const counts = new Map<string, number>();
+
+	for (const name of Object.keys(CATEGORY_META)) {
+		counts.set(name, 0);
+	}
 
 	for (const post of getPublishedPosts(posts)) {
 		const name = post.data.category.trim();

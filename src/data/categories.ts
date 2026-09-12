@@ -36,7 +36,7 @@ export const CATEGORY_META: Record<
 	},
 	模板: {
 		description: '写作范文与可复制的文章骨架，不计入正式技术笔记。',
-		order: 1,
+		order: 99,
 	},
 };
 
