@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { getCategoryDescription } from '../../data/categories';
+import {
+	buildCategorySummaries,
+	filterPostsByCategory,
+	getPublishedPosts,
+} from '../../utils/categories';
+import { withBase } from '../../utils/paths';
+
+export async function getStaticPaths() {
+	const posts = getPublishedPosts(await getCollection('blog'));
+	const categories = buildCategorySummaries(posts);
+
+	return categories.map((category) => ({
+		params: { category: category.slug },
+		props: {
+			categoryName: category.name,
+			posts: filterPostsByCategory(posts, category.name),
+			categories,
+		},
+	}));
+}
+
+const { categoryName, posts, categories } = Astro.props;
+---
+
+<BaseLayout
+	title={`${categoryName} · 分类`}
+	description={getCategoryDescription(categoryName)}
+>
+	<header class="page-hero">
+		<p class="eyebrow">
+			<a href={withBase('categories/')}>全部分类</a>
+		</p>
+		<h1>{categoryName}</h1>
+		<p>{getCategoryDescription(categoryName)}</p>
+	</header>
+
+	<section class="section">
+		<CategoryFilter categories={categories} active={categoryName} />
+		<PostList posts={posts} showCategory={false} />
+	</section>
+</BaseLayout>

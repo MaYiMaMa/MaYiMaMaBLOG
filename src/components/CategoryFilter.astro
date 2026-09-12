@@ -1,0 +1,36 @@
+---
+import { withBase } from '../utils/paths';
+import type { CategorySummary } from '../utils/categories';
+
+interface Props {
+	categories: CategorySummary[];
+	active?: string;
+	showAll?: boolean;
+}
+
+const { categories, active, showAll = true } = Astro.props;
+---
+
+<nav class="category-filter" aria-label="文章分类">
+	{
+		showAll && (
+			<a
+				class:list={['category-chip', { 'is-active': !active }]}
+				href={withBase('blog/')}
+			>
+				全部
+			</a>
+		)
+	}
+	{
+		categories.map((category) => (
+			<a
+				class:list={['category-chip', { 'is-active': active === category.name }]}
+				href={withBase(`categories/${category.slug}/`)}
+			>
+				{category.name}
+				<span class="category-count">{category.count}</span>
+			</a>
+		))
+	}
+</nav>

@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { toCategorySlug } from '../../utils/categories';
+import { withBase } from '../../utils/paths';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -25,6 +27,11 @@ function formatDate(date: Date) {
 <BaseLayout title={post.data.title} description={post.data.description}>
 	<article class="prose">
 		<header class="page-hero">
+			<p class="eyebrow">
+				<a href={withBase(`categories/${toCategorySlug(post.data.category)}/`)}>
+					{post.data.category}
+				</a>
+			</p>
 			<h1>{post.data.title}</h1>
 			<p>{post.data.description}</p>
 			<div class="post-meta">

@@ -1,12 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { withBase } from '../utils/paths';
+import { toCategorySlug } from '../utils/categories';
 
 interface Props {
 	posts: CollectionEntry<'blog'>[];
+	showCategory?: boolean;
 }
 
-const { posts } = Astro.props;
+const { posts, showCategory = true } = Astro.props;
 
 function formatDate(date: Date) {
 	return date.toLocaleDateString('zh-CN', {
@@ -17,18 +19,32 @@ function formatDate(date: Date) {
 }
 ---
 
-<ul class="post-list">
-	{
-		posts.map((post, index) => (
-			<li class="post-item" style={`animation-delay: ${index * 60}ms`}>
-				<a href={withBase(`blog/${post.id}/`)}>
-					<time datetime={post.data.pubDate.toISOString()}>
-						{formatDate(post.data.pubDate)}
-					</time>
-					<h3>{post.data.title}</h3>
-					<p>{post.data.description}</p>
-				</a>
-			</li>
-		))
-	}
-</ul>
+{
+	posts.length === 0 ? (
+		<p class="empty-hint">这个分类下还没有文章。</p>
+	) : (
+		<ul class="post-list">
+			{posts.map((post, index) => (
+				<li class="post-item" style={`animation-delay: ${index * 60}ms`}>
+					<div class="post-item-meta">
+						<time datetime={post.data.pubDate.toISOString()}>
+							{formatDate(post.data.pubDate)}
+						</time>
+						{showCategory && (
+							<a
+								class="post-category-link"
+								href={withBase(`categories/${toCategorySlug(post.data.category)}/`)}
+							>
+								{post.data.category}
+							</a>
+						)}
+					</div>
+					<a class="post-item-main" href={withBase(`blog/${post.id}/`)}>
+						<h3>{post.data.title}</h3>
+						<p>{post.data.description}</p>
+					</a>
+				</li>
+			))}
+		</ul>
+	)
+}

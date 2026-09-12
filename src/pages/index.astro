@@ -3,29 +3,51 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { buildCategorySummaries, getPublishedPosts } from '../utils/categories';
 import { withBase } from '../utils/paths';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const allPosts = await getCollection('blog');
+const posts = getPublishedPosts(allPosts);
 const latest = posts.slice(0, 3);
+const categories = buildCategorySummaries(allPosts).slice(0, 6);
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<section class="hero">
 		<div class="hero-copy">
 			<p class="hero-brand">{SITE_TITLE}</p>
-			<h1 class="hero-lead">把日常慢慢写成文字</h1>
+			<h1 class="hero-lead">把技术问题写成可检索的笔记</h1>
 			<p class="hero-support">
-				这是一个最小可用的个人博客：写 Markdown，看文章，对外分享。
+				面向程序员的个人技术博客：按分类归档，用 Markdown 持续记录。
 			</p>
 			<div class="hero-actions">
 				<a class="btn btn-primary" href={withBase('blog/')}>阅读文章</a>
-				<a class="btn btn-ghost" href={withBase('about/')}>关于我</a>
+				<a class="btn btn-ghost" href={withBase('categories/')}>浏览分类</a>
 			</div>
 		</div>
 		<div class="hero-visual" aria-hidden="true"></div>
 	</section>
+
+	{
+		categories.length > 0 && (
+			<section class="section">
+				<div class="section-head">
+					<h2>技术分类</h2>
+					<a href={withBase('categories/')}>全部分类</a>
+				</div>
+				<ul class="category-home-list">
+					{categories.map((category) => (
+						<li>
+							<a href={withBase(`categories/${category.slug}/`)}>
+								<span>{category.name}</span>
+								<span class="category-count">{category.count}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
 
 	<section class="section">
 		<div class="section-head">

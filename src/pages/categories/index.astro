@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCategoryDescription } from '../../data/categories';
+import { buildCategorySummaries, getPublishedPosts } from '../../utils/categories';
+import { withBase } from '../../utils/paths';
+
+const posts = getPublishedPosts(await getCollection('blog'));
+const categories = buildCategorySummaries(posts);
+---
+
+<BaseLayout title="分类" description="按技术方向浏览蚂蚁码码博客文章">
+	<header class="page-hero">
+		<h1>分类</h1>
+		<p>按技术主题归档。写文章时在 frontmatter 填 `category` 即可自动归类。</p>
+	</header>
+
+	<section class="section">
+		<ul class="category-grid">
+			{
+				categories.map((category, index) => (
+					<li class="category-card" style={`animation-delay: ${index * 50}ms`}>
+						<a href={withBase(`categories/${category.slug}/`)}>
+							<h2>{category.name}</h2>
+							<p>{getCategoryDescription(category.name)}</p>
+							<span class="category-card-count">{category.count} 篇</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>

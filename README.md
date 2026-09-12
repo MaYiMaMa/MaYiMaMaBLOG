@@ -20,12 +20,24 @@ npm run dev
 title: 标题
 description: 简介
 pubDate: 2026-09-12
+category: 前端
 tags:
-  - 随笔
+  - TypeScript
 ---
 
 正文内容
 ```
+
+- `category`：主分类（一篇一个）
+- `tags`：可选标签（可多个）
+- 分类说明与排序可在 `src/data/categories.ts` 配置
+- **写作模板**：见分类「模板」中的《技术文章 Markdown 写作模板》
+
+## 分类页面
+
+- 全部分类：`/categories/`
+- 某一分类：`/categories/前端/`
+- 文章页可通过顶部筛选切换分类
 
 ## 构建
 

@@ -2,18 +2,21 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { buildCategorySummaries, getPublishedPosts } from '../../utils/categories';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const allPosts = await getCollection('blog');
+const posts = getPublishedPosts(allPosts);
+const categories = buildCategorySummaries(allPosts);
 ---
 
-<BaseLayout title="文章" description="蚂蚁码码博客的全部文章">
+<BaseLayout title="文章" description="蚂蚁码码博客的全部技术文章">
 	<header class="page-hero">
 		<h1>文章</h1>
-		<p>按时间倒序排列。新文章放进 `src/content/blog` 即可自动出现。</p>
+		<p>按时间倒序。可用分类筛选，或到「分类」页按主题浏览。</p>
 	</header>
 	<section class="section">
+		<CategoryFilter categories={categories} />
 		<PostList posts={posts} />
 	</section>
 </BaseLayout>

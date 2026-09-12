@@ -288,7 +288,9 @@ p {
 }
 
 .post-item {
+	position: relative;
 	border-top: 1px solid var(--line);
+	padding: 1.25rem 0.15rem 1.35rem;
 	animation: rise 600ms ease both;
 }
 
@@ -296,31 +298,168 @@ p {
 	border-bottom: 1px solid var(--line);
 }
 
-.post-item a {
-	display: grid;
-	gap: 0.35rem;
-	padding: 1.35rem 0.15rem;
-	text-decoration: none;
-	transition: padding-left 180ms ease;
-}
-
-.post-item a:hover {
-	padding-left: 0.4rem;
-}
-
-.post-item time {
+.post-item-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.65rem 1rem;
+	margin-bottom: 0.35rem;
 	color: var(--mute);
 	font-size: 0.88rem;
 }
 
-.post-item h3 {
+.post-item-main {
+	display: grid;
+	gap: 0.35rem;
+	text-decoration: none;
+	transition: transform 180ms ease;
+}
+
+.post-item-main:hover {
+	transform: translateX(0.25rem);
+}
+
+.post-item-main h3 {
 	margin: 0;
 	font-size: 1.25rem;
 }
 
-.post-item p {
+.post-item-main p {
 	margin: 0;
 	color: var(--ink-soft);
+}
+
+.post-category-link {
+	color: var(--accent);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.post-category-link:hover {
+	text-decoration: underline;
+}
+
+.empty-hint {
+	color: var(--mute);
+}
+
+.eyebrow {
+	margin: 0 0 0.65rem;
+	color: var(--mute);
+	font-size: 0.92rem;
+}
+
+.eyebrow a {
+	color: var(--accent);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.category-filter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.55rem;
+	margin-bottom: 1.5rem;
+}
+
+.category-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.4rem 0.7rem;
+	border: 1px solid var(--line);
+	border-radius: 0.55rem;
+	background: var(--surface);
+	color: var(--ink-soft);
+	text-decoration: none;
+	font-size: 0.92rem;
+	transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.category-chip:hover,
+.category-chip.is-active {
+	border-color: rgba(47, 107, 87, 0.45);
+	color: var(--ink);
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.category-count {
+	color: var(--mute);
+	font-variant-numeric: tabular-nums;
+	font-size: 0.85em;
+}
+
+.category-grid {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+	gap: 1rem;
+}
+
+.category-card {
+	animation: rise 600ms ease both;
+}
+
+.category-card a {
+	display: grid;
+	gap: 0.45rem;
+	min-height: 100%;
+	padding: 1.15rem 1.2rem;
+	border-top: 2px solid var(--accent-soft);
+	background: var(--surface);
+	backdrop-filter: blur(8px);
+	text-decoration: none;
+	transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.category-card a:hover {
+	transform: translateY(-2px);
+	border-color: var(--accent);
+}
+
+.category-card h2 {
+	margin: 0;
+	font-size: 1.25rem;
+}
+
+.category-card p {
+	margin: 0;
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+}
+
+.category-card-count {
+	color: var(--mute);
+	font-size: 0.88rem;
+}
+
+.category-home-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0;
+	border-top: 1px solid var(--line);
+}
+
+.category-home-list li {
+	border-bottom: 1px solid var(--line);
+}
+
+.category-home-list a {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.95rem 0.1rem;
+	text-decoration: none;
+	transition: padding-left 180ms ease;
+}
+
+.category-home-list a:hover {
+	padding-left: 0.35rem;
 }
 
 .page-hero {
@@ -341,7 +480,7 @@ p {
 	max-width: var(--content);
 }
 
-.prose :is(h2, h3) {
+.prose :is(h2, h3, h4) {
 	margin-top: 2rem;
 }
 
@@ -376,6 +515,55 @@ p {
 	padding-left: 1rem;
 	border-left: 3px solid var(--accent-soft);
 	color: var(--ink-soft);
+}
+
+.prose hr {
+	border: 0;
+	border-top: 1px solid var(--line);
+	margin: 2rem 0;
+}
+
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.25rem 0 1.75rem;
+	font-size: 0.95rem;
+	overflow-x: auto;
+	display: block;
+}
+
+.prose th,
+.prose td {
+	border: 1px solid var(--line);
+	padding: 0.55rem 0.7rem;
+	text-align: left;
+}
+
+.prose th {
+	background: rgba(255, 255, 255, 0.55);
+	font-weight: 600;
+}
+
+.prose img {
+	margin: 1rem 0 0.35rem;
+	border-radius: 0.75rem;
+}
+
+.prose details {
+	margin: 1.25rem 0;
+	padding: 0.85rem 1rem;
+	border: 1px solid var(--line);
+	background: var(--surface);
+}
+
+.prose summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.prose input[type='checkbox'] {
+	margin-right: 0.4rem;
 }
 
 .post-meta {
