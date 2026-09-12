@@ -34,6 +34,10 @@ export const CATEGORY_META: Record<
 		description: 'Python 语言、工具链与数据科学相关笔记。',
 		order: 15,
 	},
+	AI: {
+		description: '大模型、本地推理与 AI 工程相关笔记。',
+		order: 12,
+	},
 	随笔: {
 		description: '非硬核技术记录，仍与开发日常相关。',
 		order: 90,
