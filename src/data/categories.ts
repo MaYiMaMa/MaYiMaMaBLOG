@@ -30,6 +30,10 @@ export const CATEGORY_META: Record<
 		description: '数据结构、算法题解与复杂度分析。',
 		order: 50,
 	},
+	Python: {
+		description: 'Python 语言、工具链与数据科学相关笔记。',
+		order: 15,
+	},
 	随笔: {
 		description: '非硬核技术记录，仍与开发日常相关。',
 		order: 90,
