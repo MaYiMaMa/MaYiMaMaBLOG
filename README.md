@@ -34,14 +34,17 @@ npm run build
 npm run preview
 ```
 
-## 部署到外网（推荐）
+## 部署到外网
 
-1. 把项目推到 GitHub
-2. 打开 [Vercel](https://vercel.com) 或 [Cloudflare Pages](https://pages.cloudflare.com)
-3. 导入仓库，框架选 Astro，按默认构建即可
-4. 部署完成后会得到公网地址（如 `xxx.vercel.app`）
+本站已通过 GitHub Pages 发布：
 
-部署后把 `astro.config.mjs` 里的 `site` 改成你的真实域名。
+**https://mayimama.github.io/MaYiMaMaBLOG/**
+
+推送到 `main` 分支后会自动重新部署。
+
+仓库地址：https://github.com/MaYiMaMa/MaYiMaMaBLOG
+
+如需更换域名，修改 `astro.config.mjs` 中的 `site` / `base`。
 
 ## 站点信息
 
