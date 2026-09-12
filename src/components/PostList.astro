@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../utils/paths';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+
+function formatDate(date: Date) {
+	return date.toLocaleDateString('zh-CN', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
+}
+---
+
+<ul class="post-list">
+	{
+		posts.map((post, index) => (
+			<li class="post-item" style={`animation-delay: ${index * 60}ms`}>
+				<a href={withBase(`blog/${post.id}/`)}>
+					<time datetime={post.data.pubDate.toISOString()}>
+						{formatDate(post.data.pubDate)}
+					</time>
+					<h3>{post.data.title}</h3>
+					<p>{post.data.description}</p>
+				</a>
+			</li>
+		))
+	}
+</ul>

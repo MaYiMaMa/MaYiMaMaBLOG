@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_AUTHOR } from '../consts';
+---
+
+<BaseLayout title="关于" description="关于蚂蚁妈妈博客">
+	<header class="page-hero">
+		<h1>关于</h1>
+		<p>认识一下这座小站，以及写字的人。</p>
+	</header>
+	<section class="about-panel prose">
+		<p>
+			你好，我是 {SITE_AUTHOR}。这里用来记录生活碎片、读书笔记，以及偶尔冒出来的想法。
+		</p>
+		<p>
+			博客基于 Astro 搭建，文章都是 Markdown。本地写完、构建部署后，就能在外网访问。
+		</p>
+		<p>
+			如果你也想开始写，从改掉首页这几句话、再新增一篇 `src/content/blog` 里的文章开始就好。
+		</p>
+	</section>
+</BaseLayout>
